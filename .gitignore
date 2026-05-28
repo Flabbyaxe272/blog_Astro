@@ -1,2 +1,25 @@
-# Remove node_modules
+# Dependencies
 node_modules/
+
+# Astro build output & cache
+dist/
+.astro/
+
+# Wrangler / Cloudflare
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# TypeScript
+*.tsbuildinfo
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
