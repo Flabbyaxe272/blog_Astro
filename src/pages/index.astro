@@ -1,0 +1,286 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+// ── Edit these to make it yours ──────────────────────────────────────────
+const NAME        = 'Justin Farris';
+const ROLE        = 'A guy who breaks things | A guy who fixes what he broke';
+const BIO         = 'Husband, Father, Techie, Foodie. In that order.';
+const EMAIL       = 'justin@farrisfam.org';
+const GITHUB_URL  = 'https://github.com/Flabbyaxe272';
+
+const PROJECTS = [
+	{
+		title: 'homelab',
+		description: 'Documented homelab, showcasing zero-trust architecture.',
+		tech: ['Docker', 'Traefik', 'Authentik'],
+		url: '',
+		repo: 'https://github.com/Flabbyaxe272/homelab',
+		featured: true,
+	},
+	{
+		title: 'Recipebook',
+		description: 'Digital collection of family favorite recipes.',
+		tech: ['Markdown', 'Material for MkDocs'],
+		url: 'https://recipes.farrisfam.org/',
+		repo: 'https://github.com/Flabbyaxe272/recipebook',
+		featured: false,
+	},
+];
+// ────────────────────────────────────────────────────────────────────────
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+
+			<!-- Hero -->
+			<section class="hero">
+				<h1 class="hero-name">{NAME}</h1>
+				<p class="hero-role">{ROLE}</p>
+				<p class="hero-bio">{BIO}</p>
+				<div class="hero-links">
+					<a href={`mailto:${EMAIL}`} class="btn btn-primary">Get in touch</a>
+					<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" class="btn">GitHub</a>
+				</div>
+			</section>
+
+			<!-- Projects -->
+			<section class="section">
+				<h2 class="section-title">Projects</h2>
+				<ul class="projects-grid">
+					{PROJECTS.map((p) => (
+						<li class:list={['project-card', { featured: p.featured }]}>
+							{p.featured && <span class="featured-badge">Featured</span>}
+							<h3 class="project-name">{p.title}</h3>
+							<p class="project-desc">{p.description}</p>
+							<ul class="tag-list">
+								{p.tech.map((t) => <li class="tag">{t}</li>)}
+							</ul>
+							<div class="project-links">
+								{p.repo && <a href={p.repo} class="text-link" target="_blank" rel="noopener noreferrer">Source ↗</a>}
+								{p.url  && <a href={p.url}  class="text-link" target="_blank" rel="noopener noreferrer">Live ↗</a>}
+							</div>
+						</li>
+					))}
+				</ul>
+			</section>
+
+			<!-- Recent posts -->
+			{posts.length > 0 && (
+				<section class="section">
+					<div class="section-header">
+						<h2 class="section-title">Recent posts</h2>
+						<a href="/blog" class="text-link">All posts →</a>
+					</div>
+					<ul class="posts-list">
+						{posts.map((post) => (
+							<li class="post-row">
+								<a href={`/blog/${post.id}`} class="post-title">{post.data.title}</a>
+								<p class="post-excerpt">{post.data.description}</p>
+								<p class="post-meta"><FormattedDate date={post.data.pubDate} /></p>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 1em;
+	}
+
+	/* Hero */
+	.hero {
+		padding: 3rem 0 2rem;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.hero-name {
+		font-size: 2rem;
+		margin: 0 0 0.25rem;
+	}
+	.hero-role {
+		color: rgb(var(--gray));
+		margin: 0 0 1rem;
+	}
+	.hero-bio {
+		max-width: 540px;
+		line-height: 1.7;
+		color: rgb(var(--gray-dark));
+		margin: 0 0 1.5rem;
+	}
+	.hero-links {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	/* Buttons */
+	.btn {
+		display: inline-block;
+		padding: 0.45rem 1rem;
+		border-radius: 6px;
+		border: 1px solid rgb(var(--gray-light));
+		font-size: 0.875rem;
+		text-decoration: none;
+		color: rgb(var(--gray-dark));
+		transition: border-color 0.15s;
+	}
+	.btn:hover {
+		border-color: rgb(var(--gray));
+	}
+	.btn-primary {
+    background: rgb(var(--accent));
+    border-color: rgb(var(--accent));
+    color: rgb(var(--gray-dark));
+	}   
+	.btn-primary:hover {
+		opacity: 0.9;
+	}
+
+	/* Sections */
+	.section {
+		padding: 2rem 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.section-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.25rem;
+	}
+	.section-title {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.07em;
+		color: rgb(var(--gray));
+		margin: 0 0 1.25rem;
+	}
+	.section-header .section-title {
+		margin-bottom: 0;
+	}
+
+	/* Projects */
+	.projects-grid {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+		gap: 1rem;
+	}
+	.project-card {
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		padding: 1.1rem 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.project-card.featured {
+		border-color: rgb(var(--accent));
+	}
+	.featured-badge {
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: rgb(var(--accent));
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+	.project-name {
+		font-size: 1rem;
+		margin: 0;
+	}
+	.project-desc {
+		font-size: 0.875rem;
+		color: rgb(var(--gray));
+		line-height: 1.55;
+		margin: 0;
+		flex: 1;
+	}
+	.tag-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.375rem;
+	}
+	.tag {
+		font-size: 0.7rem;
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+		border: 1px solid rgb(var(--gray-light));
+		color: rgb(var(--gray));
+	}
+	.project-links {
+		display: flex;
+		gap: 0.75rem;
+	}
+
+	/* Posts */
+	.posts-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.post-row {
+		padding: 0.875rem 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.post-row:last-child {
+		border-bottom: none;
+	}
+	.post-title {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+	}
+	.post-title:hover {
+		text-decoration: underline;
+	}
+	.post-excerpt {
+		font-size: 0.875rem;
+		color: rgb(var(--gray));
+		margin: 0.2rem 0 0.3rem;
+		line-height: 1.5;
+	}
+	.post-meta {
+		font-size: 0.8rem;
+		color: rgb(var(--gray));
+		margin: 0;
+	}
+
+	/* Shared */
+	.text-link {
+		font-size: 0.875rem;
+		color: rgb(var(--accent));
+		text-decoration: none;
+	}
+	.text-link:hover {
+		text-decoration: underline;
+	}
+</style>
