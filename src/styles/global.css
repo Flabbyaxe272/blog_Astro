@@ -5,8 +5,8 @@
  */
 
  :root {
-   --accent: #2337ff;
-   --accent-dark: #000d8a;
+   --accent: #f97316;      /* warm orange — energetic, techy */
+   --accent-dark: #ea580c;
    --black: 15, 18, 25;
    --gray: 96, 115, 159;
    --gray-light: 229, 233, 240;
@@ -19,8 +19,8 @@
  }
  
  [data-theme="dark"] {
-   --accent: #818cf8;
-   --accent-dark: #a5b4fc;
+   --accent: #fb923c;
+   --accent-dark: #fed7aa;
    --black: 240, 240, 245;
    --gray: 160, 170, 190;
    --gray-light: 40, 45, 60;

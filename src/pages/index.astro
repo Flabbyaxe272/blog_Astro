@@ -14,6 +14,7 @@ const posts = (await getCollection('blog'))
 const NAME        = 'Justin Farris';
 const ROLE        = 'A guy who breaks things | A guy who fixes what he broke';
 const BIO         = 'Husband, Father, Techie, Foodie. In that order.';
+const STATUS       = '📡 Currently: Doing some schoolwork for my IT Degree'
 const EMAIL       = 'justin@farrisfam.org';
 const GITHUB_URL  = 'https://github.com/Flabbyaxe272';
 
@@ -52,6 +53,7 @@ const PROJECTS = [
 				<h1 class="hero-name">{NAME}</h1>
 				<p class="hero-role">{ROLE}</p>
 				<p class="hero-bio">{BIO}</p>
+				<p class="hero-status">{STATUS}</p>
 				<div class="hero-links">
 					<a href={`mailto:${EMAIL}`} class="btn btn-primary">Get in touch</a>
 					<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" class="btn">GitHub</a>
@@ -113,13 +115,15 @@ const PROJECTS = [
 
 	/* Hero */
 	.hero {
-		padding: 3rem 0 2rem;
-		border-bottom: 1px solid rgb(var(--gray-light));
+        padding: 4rem 0 2.5rem;
+        border-bottom: 1px solid rgb(var(--gray-light));
+        border-left: 4px solid var(--accent); 
+        padding-left: 1.5rem;                 
 	}
 	.hero-name {
-		font-size: 2rem;
-		margin: 0 0 0.25rem;
-	}
+        font-size: clamp(2.5rem, 5vw, 3.5rem);   /* was 2rem */
+        margin: 0 0 0.25rem;
+    }
 	.hero-role {
 		color: rgb(var(--gray));
 		margin: 0 0 1rem;
@@ -129,6 +133,12 @@ const PROJECTS = [
 		line-height: 1.7;
 		color: rgb(var(--gray-dark));
 		margin: 0 0 1.5rem;
+	}
+	.hero-status {
+        font-size: 0.85rem;
+        color: rgb(var(--gray));
+        margin: -0.5rem 0 1.5rem;
+        font-style: italic;
 	}
 	.hero-links {
 		display: flex;
@@ -153,7 +163,7 @@ const PROJECTS = [
 	.btn-primary {
     background: rgb(var(--accent));
     border-color: rgb(var(--accent));
-    color: rgb(var(--gray-dark));
+    color: rgb(var(--white));
 	}   
 	.btn-primary:hover {
 		opacity: 0.9;
