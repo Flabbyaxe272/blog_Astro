@@ -1,12 +1,12 @@
 ---
-title: "Starting Point"
+title: "The Beginning"
 description: "The story of how I got started on my homelab."
 pubDate: "May 26 2026"
 heroImage: "/blog-placeholder-2.jpg"
-tags: ["Beginning"]
+tags: ["Story"]
 ---
 
-# Repurposing a laptop as a network edge device was the best decision I made
+> Repurposing a laptop as a network edge device was the best decision I made
 
 _And it was only the best decision because it kickstarted my journey as a sysadmin. Otherwise it was awful._ 😅
 

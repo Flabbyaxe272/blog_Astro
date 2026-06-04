@@ -24,11 +24,16 @@ import { SITE_TITLE } from '../consts';
 	h2 {
 		margin: 0;
 		font-size: 1em;
+		white-space: nowrap;
 	}
 
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
+	}
+	.internal-links {
+	    display: flex;
+		align-items: center;
 	}
 	nav {
 		display: flex;
@@ -64,6 +69,12 @@ import { SITE_TITLE } from '../consts';
 </style>
 <script>
   const btn = document.getElementById('theme-toggle');
+  
+  // Sync icon on load
+  const savedTheme = localStorage.getItem('theme') ??
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (btn) btn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
   btn?.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
     const next = current === 'dark' ? 'light' : 'dark';

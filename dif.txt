@@ -1,0 +1,117 @@
+diff --git a/public/blog-placeholder-1.jpg b/public/blog-placeholder-1.jpg
+deleted file mode 100644
+index 74d4009..0000000
+Binary files a/public/blog-placeholder-1.jpg and /dev/null differ
+diff --git a/public/blog-placeholder-about.jpg b/public/blog-placeholder-about.jpg
+deleted file mode 100644
+index cf5f685..0000000
+Binary files a/public/blog-placeholder-about.jpg and /dev/null differ
+diff --git a/src/components/BaseHead.astro b/src/components/BaseHead.astro
+index 9fbb25f..10099ca 100644
+--- a/src/components/BaseHead.astro
++++ b/src/components/BaseHead.astro
+@@ -13,6 +13,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+ 
+ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+ ---
++<!-- DarkReader Opt-out -->
++<meta name="darkreader-lock" />
+ 
+ <!-- Global Metadata -->
+ <meta charset="utf-8" />
+diff --git a/src/components/Header.astro b/src/components/Header.astro
+index 744d7f5..86bc65c 100644
+--- a/src/components/Header.astro
++++ b/src/components/Header.astro
+@@ -24,12 +24,17 @@ import { SITE_TITLE } from '../consts';
+ 	h2 {
+ 		margin: 0;
+ 		font-size: 1em;
++		white-space: nowrap;
+ 	}
+ 
+ 	h2 a,
+ 	h2 a.active {
+ 		text-decoration: none;
+ 	}
++	.internal-links {
++	    display: flex;
++		align-items: center;
++	}
+ 	nav {
+ 		display: flex;
+ 		align-items: center;
+@@ -64,6 +69,12 @@ import { SITE_TITLE } from '../consts';
+ </style>
+ <script>
+   const btn = document.getElementById('theme-toggle');
++  
++  // Sync icon on load
++  const savedTheme = localStorage.getItem('theme') ??
++    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
++  if (btn) btn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
++
+   btn?.addEventListener('click', () => {
+     const current = document.documentElement.getAttribute('data-theme');
+     const next = current === 'dark' ? 'light' : 'dark';
+diff --git a/src/content/blog/starting-point.md b/src/content/blog/starting-point.md
+index 24cbc78..823f77c 100644
+--- a/src/content/blog/starting-point.md
++++ b/src/content/blog/starting-point.md
+@@ -1,12 +1,12 @@
+ ---
+-title: "Starting Point"
++title: "The Beginning"
+ description: "The story of how I got started on my homelab."
+ pubDate: "May 26 2026"
+ heroImage: "/blog-placeholder-2.jpg"
+-tags: ["Beginning"]
++tags: ["Story"]
+ ---
+ 
+-# Repurposing a laptop as a network edge device was the best decision I made
++> Repurposing a laptop as a network edge device was the best decision I made
+ 
+ _And it was only the best decision because it kickstarted my journey as a sysadmin. Otherwise it was awful._ 😅
+ 
+diff --git a/src/pages/about.astro b/src/pages/about.astro
+index f690b3c..bf7d6ac 100644
+--- a/src/pages/about.astro
++++ b/src/pages/about.astro
+@@ -5,7 +5,7 @@ import Layout from '../layouts/BlogPost.astro';
+ <Layout
+ 	title="About Me"
+ 	description="Hey, I'm Justin; aka Flabbyaxe. Welcome to my corner of the internet."
+-	pubDate={new Date('May 27 2026')}
++	pubDate={new Date('June 4 2026')}
+ 	heroImage="https://assets.farrisfam.org/AG9A3628.webp"
+ >
+ 	<p>
+@@ -25,8 +25,8 @@ import Layout from '../layouts/BlogPost.astro';
+ 	    Most of my work is often done while I'm homelabbing. I currently am working on getting it all 
+ 	    documented, either here through story on my <a href="/blog">blog</a> or in my 
+ 		<a href="https://github.com/Flabbyaxe272/homelab">GitHub repo</a>. But I've set up quite the 
+-		system, with self hosted SSO through Authentik, 
+-					
++		system, with self hosted SSO through Authentik, reverse proxy through Traefik, and many services
++		used by me and my family.					
+ 	</p>
+ 
+ 	<p>
+@@ -41,11 +41,14 @@ import Layout from '../layouts/BlogPost.astro';
+ 		There's a lot of noise out there, and I figured the best way to cut through it was to just share 
+ 		what I actually know, what I've actually run into, and how I worked through it. If something tripped 
+ 		me up and I found a way past it, chances are someone else is hitting the same wall. And maybe 
+-		something I write saves them a few hours of frustration.
++		something I write saves them a few hours of frustration. 
+ 	</p>
+ 
+ 	<p>
+ 		Whether you're here for the tech, the personal stuff, or you just stumbled in: Welcome! 
+ 		Hope you find something useful, or at least something worth reading. Stick around.
+ 	</p>
++	<p>
++	    And yes, I do understand that most of the blog structure is just the default. I'm working on it. 😉
++	</p>
+ </Layout>
+\ No newline at end of file
