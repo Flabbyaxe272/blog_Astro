@@ -7,7 +7,6 @@ tags: ["Story"]
 created: 2026-11-18
 last-edited: 2026-11-18
 ---
-# The NAS is the Most Vulnerable Server You Have
 
 *This mindset helped me realize that this server is my last line of defense
 of my data.*
