@@ -14,12 +14,12 @@
     "publish": true
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.5.5",
-    "@astrojs/mdx": "^5.0.6",
-    "@astrojs/node": "^10.1.1",
-    "@astrojs/rss": "^4.0.18",
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^6.3.8",
+    "@astrojs/cloudflare": "^14.4.9",
+    "@astrojs/mdx": "^8.1.6",
+    "@astrojs/node": "^11.1.14",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.6",
+    "astro": "^7.4.13",
     "typescript": "5.8.3"
   },
   "devDependencies": {
